@@ -5,7 +5,13 @@ const bodyParser = require('body-parser');
 const { connectDB } = require("./src/db/dbConnection");
 const cors = require('cors');
 require('dotenv').config();
-app.use(bodyParser.json());
+const path = require("path");
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use(express.static(path.join(__dirname, "/public")));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 const apiRoutes = require('./src/controllers/routes');
 app.use('/api', apiRoutes);

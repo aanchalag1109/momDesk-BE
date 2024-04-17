@@ -22,12 +22,14 @@ exports.createRecipe = async(req,res, next) =>{
             return res.status(StatusCodes.BAD_REQUEST).send(ReasonPhrases.BAD_REQUEST);
         } 
         req.body.user_id = req.user.id;
+        console.log('req.user', req.user);
         const validatorError = await validateCreateRecipeRequest(req.body);
+        console.log('validatorError', validatorError);
         if (validatorError) {
             return res.status(StatusCodes.BAD_REQUEST).send(errorFunction(true, `Error in creating Data : ${validatorError.message}`));
         }
         console.log("req.body", req.body);
-        const data = await createRecipeAction(req.body);
+        const data = await createRecipeAction(req);
         return res
             .status(StatusCodes.CREATED)
             .json(Object.assign(data));
