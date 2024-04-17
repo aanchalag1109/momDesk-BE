@@ -1,0 +1,10 @@
+const { Router } = require('express');
+const { createRecipe, getAllRecipe } = require('./recipe');
+const { registerUser, loginUser } = require('./users');
+const auth = require('../middlewares/auth');
+const app = Router();
+app.post('/register-user', registerUser);
+app.post('/login-user', loginUser);
+app.post('/create-recipe', auth, createRecipe);
+app.get('/get-all-recipes', auth, getAllRecipe);
+module.exports = app;
